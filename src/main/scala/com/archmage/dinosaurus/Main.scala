@@ -3,7 +3,8 @@ package com.archmage.dinosaurus
 import sx.blah.discord.api.ClientBuilder
 import sx.blah.discord.util.DiscordException
 import sx.blah.discord.api.IDiscordClient
-import com.archmage.dinosaurus.listeners.MentionListener
+import com.archmage.dinosaurus.listeners.{CommandListener, MentionListener}
+
 import scala.io.Source
 
 object Main extends App {
@@ -27,4 +28,5 @@ object Main extends App {
 	val dispatcher = client.getDispatcher
 
   dispatcher.registerListener(new MentionListener())
+	dispatcher.registerListener(new CommandListener())
 }
