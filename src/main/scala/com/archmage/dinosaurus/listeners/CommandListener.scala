@@ -3,27 +3,27 @@ package com.archmage.dinosaurus.listeners
 import java.time.LocalDate
 
 import com.archmage.dinosaurus.components.meetup.MeetupModel
+import com.archmage.dinosaurus.components.meetup.dinosaurus.ResponseLogic
+import com.archmage.dinosaurus.globals.{ExceptionWrapper, Strings}
 import sx.blah.discord.api.events.IListener
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent
 
 import scala.util.matching.Regex
 
 class CommandListener extends IListener[MessageReceivedEvent] {
-	val command: Regex = """^\.([a-z0-9]*)[ ]?(.*)?""".r
+	val command: Regex = Strings.commandRegex.r
 
 	override def handle(event: MessageReceivedEvent): Unit = {
-		event.getMessage.getContent match {
-			case command(name, args) => {
-				if(name == "event") {
-					// meetup things
-					val meetupEvent = MeetupModel.getEvent(LocalDate.now(), LocalDate.now())
-					event.getChannel.sendMessage(MeetupModel.formatEvent(meetupEvent))
+		ExceptionWrapper.wrap(event, () => {
+			event.getMessage.getContent match {
+				case command(name, args) => {
+					name match {
+						case "today" => ResponseLogic.eventsToday(event)
+						case _ => event.getChannel.sendMessage(s"Command: `$name`; Args: `$args`")
+					}
 				}
-				else {
-					event.getChannel.sendMessage(s"Command: `$name`; Args: `$args`")
-				}
+				case _ => ()
 			}
-			case _ => ()
-		}
+		})
 	}
 }

@@ -3,7 +3,7 @@ package com.archmage.dinosaurus
 import sx.blah.discord.api.ClientBuilder
 import sx.blah.discord.util.DiscordException
 import sx.blah.discord.api.IDiscordClient
-import com.archmage.dinosaurus.listeners.{CommandListener, MentionListener}
+import com.archmage.dinosaurus.listeners.{CommandListener, GuildCreateListener, MentionListener, MessageListener}
 
 import scala.io.Source
 
@@ -14,11 +14,11 @@ object Main extends App {
 		try {
 			if (login) clientBuilder.login()
 			else clientBuilder.build()
-		} catch {
-			case de: DiscordException => {
+		}
+		catch {
+			case de: DiscordException =>
 				de.printStackTrace()
-				return null
-			}
+				null
 		}
 	}
 
@@ -27,6 +27,8 @@ object Main extends App {
 	val client = createClient(token, true)
 	val dispatcher = client.getDispatcher
 
-  dispatcher.registerListener(new MentionListener())
+	dispatcher.registerListener(new GuildCreateListener())
+	dispatcher.registerListener(new MentionListener())
 	dispatcher.registerListener(new CommandListener())
+	dispatcher.registerListener(new MessageListener())
 }

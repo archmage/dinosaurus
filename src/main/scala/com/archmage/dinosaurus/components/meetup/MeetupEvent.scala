@@ -13,13 +13,15 @@ object MeetupEvent {
   }
 
   def makeFromList(json: String): List[MeetupEvent] = {
-    val posts = parse(json).children.head.extract[List[MeetupEvent]]
+    val posts = parse(json).extract[List[MeetupEvent]]
     posts
   }
 }
 
 case class MeetupEvent(name: String,
+                       local_date: String,
+                       local_time: String,
                        description: String,
-                       event_url: String,
-                       time: Int,
-                       yes_rsvp_count: Int)
+                       link: String,
+                       yes_rsvp_count: Int,
+                       waitlist_count: Int)
