@@ -1,7 +1,9 @@
 package com.archmage.dinosaurus.globals
 
-// big ol' list of wordstuff
-object Strings {
+import java.time.{Duration, LocalTime}
+
+// big ol' list of wordstuff... and some non-wordstuff
+object Constants {
 
   // bot's responses
   def dinoSpeak(message: String): String = s"<:dino:493687330423570442> `$message`"
@@ -16,6 +18,8 @@ object Strings {
       |
       |%2$s""".stripMargin)
 
+  val autocheckResponse: String = dinoSpeak("Hey! The autocheck thing happened!")
+
   val exceptionResponse: String = dinoSpeak("""Oh no! Whatever you just did threw this:` %1$s
     |`I've sent the details to your console. Not me, of course!""".stripMargin)
 
@@ -24,6 +28,11 @@ object Strings {
   val meetupEventsEndpoint = "/Melbourne-Casual-Netrunner-Meetup/events"
   val useragent = "Dinosaurus (https://github.com/archmage/dinosaurus)"
   val timezone = "Australia/Melbourne"
+
+  // date things for autochecking
+  val autocheckTime: LocalTime = LocalTime.of(9, 0) // 9:00
+  val autocheckInterval: Duration = Duration.ofMinutes(2)
+  val autocheckChannel = 496514701061259274L // 493948188642770945L is #dev, 496514701061259274L is #events
 
   // regex for matching commands and stuff
   val commandRegex = """^\.([a-z0-9]+)[ ]?(.*)?"""

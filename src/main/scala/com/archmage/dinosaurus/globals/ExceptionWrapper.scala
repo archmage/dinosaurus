@@ -9,7 +9,7 @@ object ExceptionWrapper {
     }
     catch {
       case e: Exception => {
-        val response = String.format(Strings.exceptionResponse, e.getClass.toString.substring(6))
+        val response = String.format(Constants.exceptionResponse, e.getClass.toString.substring(6))
         println(e.printStackTrace())
         event.getChannel.sendMessage(response)
       }
