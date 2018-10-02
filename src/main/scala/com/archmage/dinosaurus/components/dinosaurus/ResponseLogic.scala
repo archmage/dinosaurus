@@ -1,4 +1,4 @@
-package com.archmage.dinosaurus.components.meetup.dinosaurus
+package com.archmage.dinosaurus.components.dinosaurus
 
 import com.archmage.dinosaurus.components.meetup.MeetupModel
 import com.archmage.dinosaurus.globals.Strings
@@ -17,8 +17,8 @@ object ResponseLogic {
         s"""${Strings.oneEventResponse}
            |
            |${MeetupModel.formatEvent(events.head, true)}""".stripMargin)
-      case _ => event.getChannel.sendMessage(String.format(
-        Strings.manyEventsResponse, events.size, MeetupModel.formatEvent(events.head, true)))
+      case _ => event.getChannel.sendMessage(Strings.manyEventsResponse.format(
+        events.size, MeetupModel.formatEvent(events.head, true)))
     }
   }
 
