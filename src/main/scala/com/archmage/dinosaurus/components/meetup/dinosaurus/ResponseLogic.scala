@@ -17,10 +17,8 @@ object ResponseLogic {
         s"""${Strings.oneEventResponse}
            |
            |${MeetupModel.formatEvent(events.head, true)}""".stripMargin)
-      // TODO somehow tidy this up
-      case _ => event.getChannel.sendMessage(s"""\\:dino: `There are ${events.size} events today! Here's the first one.`
-      |
-      |${MeetupModel.formatEvent(events.head, true)}""".stripMargin)
+      case _ => event.getChannel.sendMessage(String.format(
+        Strings.manyEventsResponse, events.size, MeetupModel.formatEvent(events.head, true)))
     }
   }
 

@@ -9,8 +9,7 @@ object ExceptionWrapper {
     }
     catch {
       case e: Exception => {
-        val response = s"""\\:dino: `Oh no! Whatever you just did threw this:` ${e.getClass.toString.substring(6)}
-                          |`I've sent the details to your console. Not me, of course!`""".stripMargin
+        val response = String.format(Strings.exceptionResponse, e.getClass.toString.substring(6))
         println(e.printStackTrace())
         event.getChannel.sendMessage(response)
       }

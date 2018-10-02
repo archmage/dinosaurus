@@ -9,11 +9,10 @@ import scalaj.http.{Http, HttpResponse}
 object MeetupModel {
   val api: String = Strings.meetupApi
   val eventsEndpoint: String = Strings.meetupEventsEndpoint
-  val parameters = "?group_urlname=Melbourne-Casual-Netrunner-Meetup"
   val useragent: String = Strings.useragent
 
   // date code is always fucky, sorry if this has bugs
-  def getEventsOnDay(date: LocalDate = LocalDate.now(ZoneId.of("Australia/Melbourne"))): List[MeetupEvent] = {
+  def getEventsOnDay(date: LocalDate = LocalDate.now(ZoneId.of(Strings.timezone))): List[MeetupEvent] = {
     val url = s"$api$eventsEndpoint?no_later_than=${date.format(DateTimeFormatter.ISO_DATE)}T23:59:59"
     val apiRequest = request(url)
     val events = MeetupEvent.makeFromList(apiRequest.body)
