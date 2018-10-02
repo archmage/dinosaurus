@@ -22,10 +22,17 @@ object Main extends App {
 		}
 	}
 
-  // nope!
-  val token = Source.fromFile("bot_token.txt").mkString
-	val client = createClient(token, true)
-	val dispatcher = client.getDispatcher
+	// token stuff
+	var client: IDiscordClient = _
+	if(!args.isEmpty) {
+		client = createClient(args.head, true)
+	}
+	else {
+		val token = Source.fromFile("bot_token.txt").mkString
+		client = createClient(token, true)
+	}
+
+  val dispatcher = client.getDispatcher
 
 	dispatcher.registerListener(new GuildCreateListener())
 	dispatcher.registerListener(new MentionListener())

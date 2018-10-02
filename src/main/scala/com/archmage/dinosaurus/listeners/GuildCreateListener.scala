@@ -36,11 +36,13 @@ class GuildCreateListener extends IListener[GuildCreateEvent] {
 
   def scheduleAutocheck(date: LocalDateTime, channel: IChannel): Unit = {
     val delayUntilNextCheck = Duration.between(LocalDateTime.now(ZoneId.of(Constants.timezone)), date)
-    println(s"Sleeping until $date.")
-    Thread.sleep(delayUntilNextCheck.toMillis)
+    if(delayUntilNextCheck.toMillis >= 0) {
+      println(s"Sleeping until $date.")
+      Thread.sleep(delayUntilNextCheck.toMillis)
 
-    // once awake...
-    ResponseLogic.autocheckResponse(channel)
+      // once awake...
+      ResponseLogic.autocheckResponse(channel)
+    }
     scheduleAutocheck(date.plusDays(1), channel)
   }
 }
