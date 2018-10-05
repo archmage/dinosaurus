@@ -6,6 +6,7 @@ lazy val root = (project in file(".")).
       version      := "1.0"
     )),
     name := "dinosaurus",
+    mainClass in (Compile, run) := Some("com.archmage.dinosaurus.Main"),
     libraryDependencies ++= Seq (
       "com.github.austinv11" % "Discord4J" % "2.10.1",
       "org.scalaj" %% "scalaj-http" % "2.3.0",

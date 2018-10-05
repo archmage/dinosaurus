@@ -5,11 +5,17 @@ import java.time.{Duration, LocalTime}
 // big ol' list of wordstuff... and some non-wordstuff
 object Constants {
 
+  // discord client setup stuff
+  val tokenFilename = "dev_token.txt"
+
   // bot's responses
   def dinoSpeak(message: String): String = s"<:dino:493687330423570442> `$message`"
 
   val greeting: String = dinoSpeak("Rawr! Dinosaurus here, ready to host!")
   val defaultMentionResponse: String = dinoSpeak("Hello there! Have you got a program for me?")
+
+  val exceptionResponse: String = dinoSpeak("""Oh no! Whatever you just did threw this:` %1$s
+                                              |`I've sent the details to your console. Not me, of course!""".stripMargin)
 
   val noEventsResponse: String = dinoSpeak("There are no events today :(")
   val oneEventResponse: String = dinoSpeak("There is one event today!")
@@ -20,12 +26,20 @@ object Constants {
 
   val autocheckResponse: String = dinoSpeak("Hey! The autocheck thing happened!")
 
-  val exceptionResponse: String = dinoSpeak("""Oh no! Whatever you just did threw this:` %1$s
-    |`I've sent the details to your console. Not me, of course!""".stripMargin)
+  val cardSearchResponse: String = dinoSpeak("You searched for %1$s! I don't know how to find cards yet though :(")
+  val cardSearchNoMatchResponse: String = dinoSpeak("No Netrunner card result found for \"%1$s\".")
 
-  // api config stuff
+  // meetup api config stuff
   val meetupApi = "https://api.meetup.com"
   val meetupEventsEndpoint = "/Melbourne-Casual-Netrunner-Meetup/events"
+
+  // netrunnerdb config stuff
+  val netrunnerDBApi = "https://netrunnerdb.com/api/2.0"
+  val netrunnerDBAllCardsEndpoint = "/public/cards"
+
+  val cardCache = "cards.json"
+
+  // general api stuff
   val useragent = "Dinosaurus (https://github.com/archmage/dinosaurus)"
   val timezone = "Australia/Melbourne"
 
@@ -39,4 +53,5 @@ object Constants {
   val todayEventRegex = """.*((event.*today)|(today.*event)).*"""
   val urlRegex = "(https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*))"
   val throwExceptionRegex = """.*((blow something up)|(break something)).*"""
+  val cardSearchRegex = """\[\[(.+?)\]\]"""
 }

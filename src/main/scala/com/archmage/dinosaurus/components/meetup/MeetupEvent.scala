@@ -7,7 +7,6 @@ object MeetupEvent {
   implicit val formats:DefaultFormats = DefaultFormats
 
   def make(json: String): MeetupEvent = {
-    println(json)
     val event = parse(json).extract[MeetupEvent]
     event
   }

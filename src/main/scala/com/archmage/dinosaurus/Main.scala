@@ -1,5 +1,6 @@
 package com.archmage.dinosaurus
 
+import com.archmage.dinosaurus.globals.Constants
 import sx.blah.discord.api.ClientBuilder
 import sx.blah.discord.util.DiscordException
 import sx.blah.discord.api.IDiscordClient
@@ -28,7 +29,9 @@ object Main extends App {
 		client = createClient(args.head, true)
 	}
 	else {
-		val token = Source.fromFile("bot_token.txt").mkString
+		val stream = Source.fromFile(Constants.tokenFilename)
+		val token = stream.mkString
+		stream.close()
 		client = createClient(token, true)
 	}
 

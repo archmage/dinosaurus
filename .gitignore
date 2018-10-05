@@ -19,6 +19,11 @@ project/plugins/project/
 # IntelliJ
 .idea
 
+# generated assets - eventually
+# cards.json
+
 # ;)
 bot_token.txt
 secret.txt
+dev_token.txt
+prod_token.txt

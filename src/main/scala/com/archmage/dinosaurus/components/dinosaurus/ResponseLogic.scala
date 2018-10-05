@@ -1,6 +1,6 @@
 package com.archmage.dinosaurus.components.dinosaurus
 
-import java.time.LocalDateTime
+import java.time.{LocalDateTime, ZoneId}
 import java.time.format.DateTimeFormatter
 
 import com.archmage.dinosaurus.components.meetup.MeetupModel
@@ -29,7 +29,8 @@ object ResponseLogic {
   def defaultMentionResponse(event: MessageEvent): Unit = event.getChannel.sendMessage(Constants.defaultMentionResponse)
 
   def autocheckResponse(channel: IChannel): Unit = {
-    channel.sendMessage(s"**${LocalDateTime.now.format(DateTimeFormatter.ofPattern("EEEE, d MMMM uuuu"))}**")
+    channel.sendMessage(s"**${LocalDateTime.now(ZoneId.of(Constants.timezone)).format(
+      DateTimeFormatter.ofPattern("EEEE, d MMMM uuuu"))}**")
     eventsToday(channel, false)
   }
 }
