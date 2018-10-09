@@ -8,8 +8,30 @@ object Constants {
   // discord client setup stuff
   val tokenFilename = "dev_token.txt"
 
+  // emoji
+  val dinoEmoji = "<:dino:493687330423570442>"
+
+  val agendaEmoji = "<:agenda:499088379581956097>"
+  val clickEmoji = "<:click:499063203184115722>"
+  val creditEmoji = "<:credit:499078904430985217>"
+  val linkEmoji = "<:link:499078904506613770>"
+  val muEmoji = "<:mu:499078904183783436>"
+  val recurringEmoji = "<:recurring:499095034520666112>"
+  val subroutineEmoji = "<:subroutine:499094005372551168>"
+  val trashEmoji = "<:trash:499078904406081548>"
+
+
+  // codes to replace in text
+  val clickCode = "[click]"
+  val creditCode = "[credit]"
+  val linkCode = "[link]"
+  val muCode = "[mu]"
+  val recurringCode = "[recurring-credit]"
+  val subroutineCode = "[subroutine]"
+  val trashCode = "[trash]"
+
   // bot's responses
-  def dinoSpeak(message: String): String = s"<:dino:493687330423570442> `$message`"
+  def dinoSpeak(message: String): String = s"$dinoEmoji `$message`"
 
   val greeting: String = dinoSpeak("Rawr! Dinosaurus here, ready to host!")
   val defaultMentionResponse: String = dinoSpeak("Hello there! Have you got a program for me?")
@@ -39,6 +61,19 @@ object Constants {
 
   val cardCache = "cards.json"
 
+  // put emoji in descriptions for embeds
+  def formatDescriptionText(text: String): String = {
+    text.replaceTag( "strong", "**$1**")
+      .replaceTag("errata", "⚠ _$1_")
+      .replace(clickCode, clickEmoji)
+      .replace(creditCode, creditEmoji)
+      .replace(linkCode, linkEmoji)
+      .replace(muCode, muEmoji)
+      .replace(recurringCode, recurringEmoji)
+      .replace(subroutineCode, subroutineEmoji)
+      .replace(trashCode, trashEmoji)
+  }
+
   // general api stuff
   val useragent = "Dinosaurus (https://github.com/archmage/dinosaurus)"
   val timezone = "Australia/Melbourne"
@@ -53,5 +88,12 @@ object Constants {
   val todayEventRegex = """.*((event.*today)|(today.*event)).*"""
   val urlRegex = "(https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*))"
   val throwExceptionRegex = """.*((blow something up)|(break something)).*"""
-  val cardSearchRegex = """\[\[(.+?)\]\]"""
+  val cardSearchRegex = """.*?\[\[(.+?)\]\].*?"""
+  val tagRegex = "<%1$s>(.*?)</%1$s>"
+
+  implicit class StringFunctions(s: String) {
+    def replaceTag(tag: String, replacement: String): String = {
+      s.replaceAll(tagRegex.format(tag), replacement)
+    }
+  }
 }

@@ -1,7 +1,10 @@
 package com.archmage.dinosaurus.components.cardsearch
 
+import com.archmage.dinosaurus.globals.Constants
 import org.json4s.{DefaultFormats, _}
 import org.json4s.jackson.JsonMethods.{parse, _}
+import sx.blah.discord.api.internal.json.objects.EmbedObject
+import sx.blah.discord.util.EmbedBuilder
 
 object NetrunnerDBCard {
   implicit val formats:DefaultFormats = DefaultFormats
@@ -19,14 +22,55 @@ object NetrunnerDBCard {
   }
 }
 
-case class NetrunnerDBCard(title: String,
-                           code: String,
-                           pack_code: String,
-                           faction_code: String,
-                           type_code: String,
-                           cost: Option[Int],
-                           keywords: Option[String],
-                           text: Option[String]) {
+case class NetrunnerDBCard(
+                          advancement_cost: Option[Int],
+                          agenda_points: Option[Int],
+                          base_link: Option[Int],
+                          code: String,
+                          cost: Option[Int],
+                          deck_limit: Int,
+                          faction_code: String,
+                          faction_cost: Option[Int],
+                          flavor: Option[String],
+                          illustrator: Option[String],
+                          image_url: Option[String],
+                          influence_limit: Option[Int],
+                          keywords: Option[String],
+                          memory_cost: Option[Int],
+                          minimum_deck_size: Option[Int],
+                          pack_code: String,
+                          position: Int,
+                          quantity: Int,
+                          side_code: String,
+                          strength: Option[Int],
+                          text: Option[String],
+                          title: String,
+                          trash_cost: Option[Int],
+                          type_code: String,
+                          uniqueness: Boolean) {
 
   def getUrl: String = s"https://netrunnerdb.com/en/card/$code"
+
+  def format: EmbedObject = {
+    val builder = new EmbedBuilder
+    builder.withTitle(s"${if(uniqueness) "◆ " else ""}$title")
+    builder.withUrl(getUrl)
+
+    val subtitle = s"${if(cost.isDefined) s"${cost.get}[credit] " else ""}" +
+      s"${if(memory_cost.isDefined) s"${memory_cost.get}[mu] " else ""}" +
+      s"${if(agenda_points.isDefined) s"${advancement_cost.get}/${agenda_points.get} ${Constants.agendaEmoji} " else ""}" +
+      s"${type_code.capitalize}${if(keywords.isDefined) s": ${keywords.get}" else ""}"
+
+    val description = s"$subtitle\n\n${text.getOrElse("No card text.")}" +
+      s"${if(flavor.isDefined) s"\n\n_${flavor.get}_" else ""}" +
+      s"${if(strength.isDefined || trash_cost.isDefined) "\n\n" else ""}" +
+      s"${if(strength.isDefined) s"**Strength ${strength.get}** " else ""}" +
+      s"${if(trash_cost.isDefined) s"${trash_cost.get}[trash]" else ""}"
+
+    builder.withDescription(Constants.formatDescriptionText(description))
+
+//    builder.withFooterIcon("set icon")
+    builder.withFooterText(s"$pack_code #$position / ${faction_code.capitalize} ${"●" * faction_cost.getOrElse(0)}")
+    builder.build()
+  }
 }

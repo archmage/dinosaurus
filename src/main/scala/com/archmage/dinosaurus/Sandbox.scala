@@ -7,7 +7,7 @@ object Sandbox extends App {
 //  println(card)
 
 //  println(NetrunnerDBModel.allTheCards.substring(30, 400))
-  println(NetrunnerDBModel.searchCard("Magnum Opus"))
+  println(NetrunnerDBModel.searchCard("dog"))
 
-  println(Faction.values)
+//  println(Faction.values)
 }
