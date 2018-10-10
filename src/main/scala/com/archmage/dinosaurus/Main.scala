@@ -9,7 +9,7 @@ import com.archmage.dinosaurus.listeners.{CommandListener, GuildCreateListener, 
 import scala.io.Source
 
 object Main extends App {
-	def createClient(token: String, login: Boolean): IDiscordClient = {
+	def createClient(token: String, login: Boolean = true): IDiscordClient = {
 		val clientBuilder = new ClientBuilder
 		clientBuilder.withToken(token)
 		try {
@@ -28,13 +28,17 @@ object Main extends App {
 	// token stuff
 	var client: IDiscordClient = _
 	if(!args.isEmpty) {
-		client = createClient(args.head, true)
+		client = createClient(args.head)
 	}
 	else {
 		val stream = Source.fromFile(Constants.tokenFilename)
-		val token = stream.mkString
+		val token = stream.getLines().collectFirst { case x => x }
 		stream.close()
-		client = createClient(token, true)
+		if(token.isEmpty) {
+			println(s"No token found in ${Constants.tokenFilename}.")
+			System.exit(Constants.noTokenFoundInFileErrorCode)
+		}
+		else client = createClient(token.get)
 	}
 
   val dispatcher = client.getDispatcher

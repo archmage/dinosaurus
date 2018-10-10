@@ -99,6 +99,7 @@ object Constants {
   val tagRegex = "<%1$s>(.*?)</%1$s>"
 
   // error code on crash when initialising client
+  val noTokenFoundInFileErrorCode = 404
   val initialisationErrorCode = 14
 
   implicit class StringFunctions(s: String) {
