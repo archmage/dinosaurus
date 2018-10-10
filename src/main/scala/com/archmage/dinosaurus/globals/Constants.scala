@@ -98,6 +98,9 @@ object Constants {
   val cardSearchRegex = """.*?[\[\(]{2}(.+?)[\]\)]{2}.*"""
   val tagRegex = "<%1$s>(.*?)</%1$s>"
 
+  // error code on crash when initialising client
+  val initialisationErrorCode = 14
+
   implicit class StringFunctions(s: String) {
     def replaceTag(tag: String, replacement: String): String = {
       s.replaceAll(tagRegex.format(tag), replacement)

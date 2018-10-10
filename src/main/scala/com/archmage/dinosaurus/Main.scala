@@ -17,8 +17,10 @@ object Main extends App {
 			else clientBuilder.build()
 		}
 		catch {
-			case de: DiscordException =>
-				de.printStackTrace()
+			case e: Exception =>
+				e.printStackTrace()
+				println(s"Token was ${token.length} character${if(token.length == 1) "" else "s"} long.")
+				System.exit(Constants.initialisationErrorCode)
 				null
 		}
 	}
