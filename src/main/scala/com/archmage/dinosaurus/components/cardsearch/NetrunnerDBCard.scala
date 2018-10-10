@@ -1,5 +1,7 @@
 package com.archmage.dinosaurus.components.cardsearch
 
+import java.awt.Color
+
 import com.archmage.dinosaurus.globals.Constants
 import org.json4s.{DefaultFormats, _}
 import org.json4s.jackson.JsonMethods.{parse, _}
@@ -51,7 +53,7 @@ case class NetrunnerDBCard(
 
   def getUrl: String = s"https://netrunnerdb.com/en/card/$code"
 
-  def format: EmbedObject = {
+  def buildEmbed: EmbedObject = {
     val builder = new EmbedBuilder
     builder.withTitle(s"${if(uniqueness) "◆ " else ""}$title")
     builder.withUrl(getUrl)
@@ -59,18 +61,22 @@ case class NetrunnerDBCard(
     val subtitle = s"${if(cost.isDefined) s"${cost.get}[credit] " else ""}" +
       s"${if(memory_cost.isDefined) s"${memory_cost.get}[mu] " else ""}" +
       s"${if(agenda_points.isDefined) s"${advancement_cost.get}/${agenda_points.get} ${Constants.agendaEmoji} " else ""}" +
+      s"${if(base_link.isDefined) s"${Constants.linkEmoji}${base_link.get} " else ""}" +
+      s"${if(minimum_deck_size.isDefined) s"${minimum_deck_size.get}/${influence_limit.get} " else ""}" +
       s"${type_code.capitalize}${if(keywords.isDefined) s": ${keywords.get}" else ""}"
 
     val description = s"$subtitle\n\n${text.getOrElse("No card text.")}" +
       s"${if(flavor.isDefined) s"\n\n_${flavor.get}_" else ""}" +
-      s"${if(strength.isDefined || trash_cost.isDefined) "\n\n" else ""}" +
-      s"${if(strength.isDefined) s"**Strength ${strength.get}** " else ""}" +
-      s"${if(trash_cost.isDefined) s"${trash_cost.get}[trash]" else ""}"
+      s"${if(strength.isDefined || trash_cost.isDefined) "\n" else ""}" +
+      s"${if(strength.isDefined) s"\n**Strength ${strength.get}**" else ""}" +
+      s"${if(trash_cost.isDefined) s"\n${trash_cost.get}[trash]" else ""}"
 
     builder.withDescription(Constants.formatDescriptionText(description))
 
 //    builder.withFooterIcon("set icon")
     builder.withFooterText(s"$pack_code #$position / ${faction_code.capitalize} ${"●" * faction_cost.getOrElse(0)}")
+
+    builder.withColor(Faction.values.getOrElse(faction_code, Color.lightGray))
     builder.build()
   }
 }

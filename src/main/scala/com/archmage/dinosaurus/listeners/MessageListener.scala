@@ -20,41 +20,7 @@ class MessageListener extends IListener[MessageReceivedEvent] {
     ExceptionWrapper.wrap(event, () => {
       event.getMessage.getContent.toLowerCase match {
         case todayEventRegex(_, _, _) => ResponseLogic.eventsToday(event.getChannel)
-        case cardSearchRegex(searchText) =>
-          val matches = NetrunnerDBModel.searchCard(searchText)
-          if(matches.isEmpty) {
-            event.getChannel.sendMessage(Constants.cardSearchNoMatchResponse.format(searchText))
-          }
-          else {
-
-            if(matches.size == 1) {
-              event.getChannel.sendMessage(matches.head.format)
-              /*
-              val card = matches.head
-              val builder = new EmbedBuilder
-              builder.withTitle(card.title)
-              builder.withUrl(card.getUrl)
-              builder.withColor(Faction.values.getOrElse(card.faction_code, Color.black))
-              builder.withDescription(
-                s"""**${if(card.cost.isDefined) s"(${card.cost.getOrElse(0)}c)" else ""} ${card.type_code.capitalize}${
-                  if(card.keywords.isDefined) s": ${card.keywords.getOrElse("")}" else ""
-                }**
-                   |
-                   |${if(card.text.isDefined) card.text.getOrElse("") else "No card text."}""".stripMargin)
-                   */
-            }
-            else {
-              val builder = new EmbedBuilder
-              builder.withTitle(s"${matches.size} matches found:")
-              builder.withColor(210, 226, 101)
-
-              val description = matches.slice(0, 10).foldLeft("") {
-                (string, card) => s"$string[${card.title} (${card.pack_code})](${card.getUrl})\n"
-              }.dropRight(1)
-              builder.withDescription(description)
-              event.getChannel.sendMessage(builder.build())
-            }
-          }
+        case cardSearchRegex(searchText) => ResponseLogic.cardSearchResponse(event.getChannel, searchText)
         case _ => ()
       }
     })

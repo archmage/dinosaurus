@@ -15,6 +15,7 @@ class CommandListener extends IListener[MessageReceivedEvent] {
 			event.getMessage.getContent match {
 				case command(name, args) => {
 					name match {
+						case "card" | "search" => ResponseLogic.cardSearchResponse(event.getChannel, args)
 						case "today" => ResponseLogic.eventsToday(event.getChannel)
 						case _ => event.getChannel.sendMessage(s"Command: `$name`; Args: `$args`")
 					}

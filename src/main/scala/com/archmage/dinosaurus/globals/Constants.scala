@@ -63,8 +63,15 @@ object Constants {
 
   // put emoji in descriptions for embeds
   def formatDescriptionText(text: String): String = {
-    text.replaceTag( "strong", "**$1**")
+    // TODO fix these weird issues - not working atm
+    text // .replaceAll("\\*", "\\*") // this actually does something, never fear
+      // .replaceAll("_", "\\_")
+      .replaceTag( "strong", "**$1**")
       .replaceTag("errata", "⚠ _$1_")
+      .replaceTag("champion", "$1")
+      .replaceTag("ul", "$1")
+      .replaceTag("li", "\n - $1")
+      .replaceTag("trace", "**$1** -")
       .replace(clickCode, clickEmoji)
       .replace(creditCode, creditEmoji)
       .replace(linkCode, linkEmoji)
@@ -79,7 +86,7 @@ object Constants {
   val timezone = "Australia/Melbourne"
 
   // date things for autochecking
-  val autocheckTime: LocalTime = LocalTime.of(9, 0) // 9:00
+  val autocheckTime: LocalTime = LocalTime.of(9, 0)
   val autocheckInterval: Duration = Duration.ofMinutes(2)
   val autocheckChannel = 496514701061259274L // 493948188642770945L is #dev, 496514701061259274L is #events
 
@@ -88,7 +95,7 @@ object Constants {
   val todayEventRegex = """.*((event.*today)|(today.*event)).*"""
   val urlRegex = "(https?:\\/\\/(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,6}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*))"
   val throwExceptionRegex = """.*((blow something up)|(break something)).*"""
-  val cardSearchRegex = """.*?\[\[(.+?)\]\].*?"""
+  val cardSearchRegex = """.*?[\[\(]{2}(.+?)[\]\)]{2}.*"""
   val tagRegex = "<%1$s>(.*?)</%1$s>"
 
   implicit class StringFunctions(s: String) {
