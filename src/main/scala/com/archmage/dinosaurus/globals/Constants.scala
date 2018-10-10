@@ -6,7 +6,7 @@ import java.time.{Duration, LocalTime}
 object Constants {
 
   // discord client setup stuff
-  val tokenFilename = "dev_token.txt"
+  val tokenFilename = "token.txt"
 
   // emoji
   val dinoEmoji = "<:dino:493687330423570442>"

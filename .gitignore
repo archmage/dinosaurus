@@ -23,7 +23,8 @@ project/plugins/project/
 # cards.json
 
 # ;)
-bot_token.txt
 secret.txt
+token.txt
+bot_token.txt
 dev_token.txt
 prod_token.txt
