@@ -1,10 +1,8 @@
 package com.archmage.dinosaurus
 
 import com.archmage.dinosaurus.globals.Constants
-import sx.blah.discord.api.ClientBuilder
-import sx.blah.discord.util.DiscordException
-import sx.blah.discord.api.IDiscordClient
 import com.archmage.dinosaurus.listeners.{CommandListener, GuildCreateListener, MentionListener, MessageListener}
+import sx.blah.discord.api.{ClientBuilder, IDiscordClient}
 
 import scala.io.Source
 
