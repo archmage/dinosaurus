@@ -44,7 +44,7 @@ object ResponseLogic {
     }
     else {
       if(matches.size == 1) {
-        channel.sendMessage(matches.head.buildEmbed)
+        channel.sendMessage(matches.head.buildEmbed())
       }
       else {
         val builder = new EmbedBuilder
@@ -64,17 +64,17 @@ object ResponseLogic {
     val matches = NetrunnerDBModel.searchCard(hostString).filter(card => {
       card.keywords.isDefined && card.keywords.get.contains("Icebreaker") && !card.keywords.get.contains("AI")
     })
-    if(matches.isEmpty) channel.sendMessage(Constants.dinoSpeak("I can't host that, that's not a thing!"))
+    if(matches.isEmpty) channel.sendMessage(Constants.dinoSpeak("I can't host that, that's not a non-AI icebreaker!"))
     else {
       if(matches.size == 1) {
         val oldHosting = hosting
         hosting = matches.headOption
         channel.sendMessage(Constants.dinoSpeak(s"Now hosting ${hosting.get.title}!" +
           s"${if(oldHosting.isDefined) s" Goodbye, ${oldHosting.get.title}!" else ""}"))
-        channel.sendMessage(hosting.get.buildEmbed)
+        channel.sendMessage(hosting.get.buildEmbed(true))
       }
       else {
-        channel.sendMessage(Constants.dinoSpeak(s"I found more than one icebreaker matching that text! Please be more specific :("))
+        channel.sendMessage(Constants.dinoSpeak(s"I found ${matches.size} non-AI icebreakers matching that text! Please be more specific :("))
       }
     }
   }
@@ -87,7 +87,7 @@ object ResponseLogic {
         case _ => "(╯°□°）╯"
       }
       channel.sendMessage(Constants.dinoSpeak(s"I am hosting ${hosting.get.title}! I'm saving you ${hosting.get.memory_cost.get} MU $muFace"))
-      channel.sendMessage(hosting.get.buildEmbed)
+      channel.sendMessage(hosting.get.buildEmbed(true))
     }
     else channel.sendMessage(Constants.dinoSpeak("""I'm not hosting anything right now :( You can give me a program to host with ".host cardname"!"""))
   }

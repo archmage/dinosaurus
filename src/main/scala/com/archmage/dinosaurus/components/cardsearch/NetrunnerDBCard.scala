@@ -53,7 +53,7 @@ case class NetrunnerDBCard(
 
   def getUrl: String = s"https://netrunnerdb.com/en/card/$code"
 
-  def buildEmbed: EmbedObject = {
+  def buildEmbed(dinoBuff: Boolean = false): EmbedObject = {
     val builder = new EmbedBuilder
     builder.withTitle(s"${if(uniqueness) "◆ " else ""}$title")
     builder.withUrl(getUrl)
@@ -68,7 +68,8 @@ case class NetrunnerDBCard(
     val description = s"$subtitle\n\n${text.getOrElse("No card text.")}" +
       s"${if(flavor.isDefined) s"\n\n_${flavor.get}_" else ""}" +
       s"${if(strength.isDefined || trash_cost.isDefined) "\n" else ""}" +
-      s"${if(strength.isDefined) s"\n**Strength ${strength.get}**" else ""}" +
+      s"${if(strength.isDefined) s"\n**Strength ${
+        if(dinoBuff) s"${strength.get + 2} (base ${strength.get}, +2 from Dinosaurus}" else strength.get}**" else ""}" +
       s"${if(trash_cost.isDefined) s"\n${trash_cost.get}[trash]" else ""}"
 
     builder.withDescription(Constants.formatDescriptionText(description))
