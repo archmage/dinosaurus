@@ -20,7 +20,7 @@ project/plugins/project/
 .idea
 
 # generated assets - eventually
-# cards.json
+cards-pretty.json
 
 # ;)
 secret.txt
