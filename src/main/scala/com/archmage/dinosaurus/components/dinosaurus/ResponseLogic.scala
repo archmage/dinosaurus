@@ -3,7 +3,7 @@ package com.archmage.dinosaurus.components.dinosaurus
 import java.time.{LocalDateTime, ZoneId}
 import java.time.format.DateTimeFormatter
 
-import com.archmage.dinosaurus.components.cardsearch.{NetrunnerDBCard, NetrunnerDBModel}
+import com.archmage.dinosaurus.components.cardsearch.{NetrunnerDBCard, NetrunnerDBModel, Pack}
 import com.archmage.dinosaurus.components.meetup.MeetupModel
 import com.archmage.dinosaurus.globals.Constants
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageEvent
@@ -52,7 +52,7 @@ object ResponseLogic {
         builder.withColor(210, 226, 101)
 
         val description = matches.slice(0, 10).foldLeft("") {
-          (string, card) => s"$string[${card.title} (${card.pack_code})](${card.getUrl})\n"
+          (string, card) => s"$string[${card.title} (${Pack.values.getOrElse(card.pack_code, "Unknown Pack")})](${card.getUrl})\n"
         }.dropRight(1)
         builder.withDescription(description)
         channel.sendMessage(builder.build())
