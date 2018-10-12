@@ -96,7 +96,7 @@ object Constants {
   val throwExceptionRegex = """.*((blow something up)|(break something)).*"""
   val cardSearchRegex = """.*?[\[\(]{2}(.+?)[\]\)]{2}.*"""
   val tagRegex = "<%1$s>(.*?)</%1$s>"
-  val factionParseRegex = "{\"code\":\"(.*?)\".*?\"name\":\"(.*?)\".*?},"
+  val packParseRegex = "{\"code\":\"(.*?)\".*?\"name\":\"(.*?)\".*?},"
 
   // error code on crash when initialising client
   val noTokenFoundInFileErrorCode = 404
