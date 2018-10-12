@@ -74,8 +74,11 @@ case class NetrunnerDBCard(
 
     builder.withDescription(Constants.formatDescriptionText(description))
 
-//    builder.withFooterIcon("set icon")
-    builder.withFooterText(s"$pack_code #$position / ${faction_code.capitalize} ${"●" * faction_cost.getOrElse(0)}")
+    // TODO implement faction icons
+    // builder.withFooterIcon("set icon")
+
+    builder.withFooterText(s"${Pack.values.getOrElse(pack_code, "Unknown Pack")} #$position / " +
+      s"${faction_code.split(" ")(0).capitalize} ${"●" * faction_cost.getOrElse(0)}")
 
     builder.withColor(Faction.values.getOrElse(faction_code, Color.lightGray))
     builder.build()

@@ -20,7 +20,6 @@ object Constants {
   val subroutineEmoji = "<:subroutine:499094005372551168>"
   val trashEmoji = "<:trash:499078904406081548>"
 
-
   // codes to replace in text
   val clickCode = "[click]"
   val creditCode = "[credit]"
@@ -97,6 +96,7 @@ object Constants {
   val throwExceptionRegex = """.*((blow something up)|(break something)).*"""
   val cardSearchRegex = """.*?[\[\(]{2}(.+?)[\]\)]{2}.*"""
   val tagRegex = "<%1$s>(.*?)</%1$s>"
+  val factionParseRegex = "{\"code\":\"(.*?)\".*?\"name\":\"(.*?)\".*?},"
 
   // error code on crash when initialising client
   val noTokenFoundInFileErrorCode = 404

@@ -2,6 +2,8 @@ package com.archmage.dinosaurus.components.cardsearch
 
 import java.awt.Color
 
+// hard-coded for now, not likely to change
+// endpoint: /api/2.0/public/factions
 object Faction {
 
   val values: Map[String, Color] = Map(
