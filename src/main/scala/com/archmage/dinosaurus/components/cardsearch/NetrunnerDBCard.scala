@@ -55,7 +55,9 @@ case class NetrunnerDBCard(
 
   def buildEmbed(dinoBuff: Boolean = false): EmbedObject = {
     val builder = new EmbedBuilder
-    builder.withTitle(s"${if(uniqueness) "◆ " else ""}$title")
+    builder.withTitle(s"${if(!faction_code.contains("neutral")) s"${Faction.values(faction_code).emoji} " else ""}" +
+      s"${if(uniqueness) "◆ " else ""}" +
+      s"$title")
     builder.withUrl(getUrl)
 
     val subtitle = s"${if(cost.isDefined) s"${cost.get}[credit] " else ""}" +
@@ -74,13 +76,10 @@ case class NetrunnerDBCard(
 
     builder.withDescription(Constants.formatDescriptionText(description))
 
-    // TODO implement faction icons
-    // builder.withFooterIcon("set icon")
-
     builder.withFooterText(s"${Pack.values.getOrElse(pack_code, "Unknown Pack")} #$position / " +
-      s"${faction_code.split(" ")(0).capitalize} ${"●" * faction_cost.getOrElse(0)}")
+      s"${Faction.values(faction_code).name} ${"●" * faction_cost.getOrElse(0)}")
 
-    builder.withColor(Faction.values.getOrElse(faction_code, Color.lightGray))
+    builder.withColor(Faction.values(faction_code).color)
     builder.build()
   }
 }

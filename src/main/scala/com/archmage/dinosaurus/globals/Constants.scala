@@ -10,6 +10,7 @@ object Constants {
 
   // emoji
   val dinoEmoji = "<:dino:493687330423570442>"
+  val spEmoji = "<:sp:500535963899133962>"
 
   val agendaEmoji = "<:agenda:499088379581956097>"
   val clickEmoji = "<:click:499063203184115722>"
@@ -20,6 +21,18 @@ object Constants {
   val subroutineEmoji = "<:subroutine:499094005372551168>"
   val trashEmoji = "<:trash:499078904406081548>"
 
+  val anarchEmoji = "<:anarch:500510408499527683>"
+  val criminalEmoji = "<:criminal:500510408839528468>"
+  val shaperEmoji = "<:shaper:500510408122040334>"
+  val adamEmoji = "<:adam:500510408616968229>"
+  val apexEmoji = "<:apex:500510408705310720>"
+  val sunnyEmoji = "<:sunny:500510408533082122>"
+
+  val hbEmoji = "<:hb:500510408805974030>"
+  val jintekiEmoji = "<:jinteki:500510408986198016>"
+  val nbnEmoji = "<:nbn:500510408206188545>"
+  val weylandEmoji = "<:weyland:500510927712419842>"
+
   // codes to replace in text
   val clickCode = "[click]"
   val creditCode = "[credit]"
@@ -28,6 +41,15 @@ object Constants {
   val recurringCode = "[recurring-credit]"
   val subroutineCode = "[subroutine]"
   val trashCode = "[trash]"
+
+  val anarchCode = "[anarch]"
+  val criminalCode = "[criminal]"
+  val shaperCode = "[shaper]"
+
+  val hbCode = "[haas-bioroid]"
+  val jintekiCode = "[jinteki]"
+  val nbnCode = "[nbn]"
+  val weylandCode = "[weyland-consortium]"
 
   // bot's responses
   def dinoSpeak(message: String): String = s"$dinoEmoji `$message`"
@@ -78,6 +100,13 @@ object Constants {
       .replace(recurringCode, recurringEmoji)
       .replace(subroutineCode, subroutineEmoji)
       .replace(trashCode, trashEmoji)
+      .replace(anarchCode, anarchEmoji)
+      .replace(criminalCode, criminalEmoji)
+      .replace(shaperCode, shaperEmoji)
+      .replace(hbCode, hbEmoji)
+      .replace(jintekiCode, jintekiEmoji)
+      .replace(nbnCode, nbnEmoji)
+      .replace(weylandCode, weylandEmoji)
   }
 
   // general api stuff
