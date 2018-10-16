@@ -67,10 +67,27 @@ object Constants {
       |
       |%2$s""".stripMargin)
 
-  val autocheckResponse: String = dinoSpeak("Hey! The autocheck thing happened!")
-
-  val cardSearchResponse: String = dinoSpeak("You searched for %1$s! I don't know how to find cards yet though :(")
   val cardSearchNoMatchResponse: String = dinoSpeak("No Netrunner card result found for \"%1$s\".")
+
+  val draftCreatedResponse: String = dinoSpeak(
+    """A new snakedraft, "%1$s", has been created!
+       |Sign up with ".register".""".stripMargin)
+  val draftInProgressResponse: String = dinoSpeak(
+    """There is already a draft in progress (%1$s).
+      |Please wait until it is done before making a new draft.""".stripMargin)
+
+  val draftSuccessfulRegisterResponse: String = dinoSpeak("You are now registered for \"%1$s\"!")
+  val draftAlreadyRegisteredResponse: String = dinoSpeak("You're already registered for \"%1$s\"!")
+  val draftNoDraftExistsResponse: String = dinoSpeak("No draft exists.")
+  val draftUserNotInDraftResponse: String = dinoSpeak("You're not in this draft.")
+
+  val draftPickTooManyResponse: String = dinoSpeak("""Too many results found (%1$s) for "%2$s".""")
+  val draftPickNotFoundResponse: String = dinoSpeak("""No card found for "%1$s".""")
+  val draftIllegalPickResponse: String = dinoSpeak(""""%1$s" isn't a legal pick - either it's rotated or it's a core econ card.""")
+  val draftPickAlreadyTakenResponse: String = dinoSpeak(""""%1$s" has already been picked by %2$s!""")
+  val draftPickConfirmedResponse: String =
+    """%1$s has picked %2$s
+      |Next up is %3$s!""".stripMargin
 
   // meetup api config stuff
   val meetupApi = "https://api.meetup.com"

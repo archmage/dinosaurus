@@ -51,14 +51,8 @@ object ResponseLogic {
         builder.withTitle(s"${matches.size} matches found:")
         builder.withColor(210, 226, 101)
 
-        val description = matches.slice(0, 10).foldLeft("") {
-          (string, card) => {
-            s"$string" +
-            s"${if(!card.faction_code.contains("neutral")) s"${Faction.values(card.faction_code).emoji} " else
-              s"${Constants.spEmoji} "}" +
-            s"[${card.title} (${Pack.values.getOrElse(card.pack_code, "Unknown Pack")})](${card.getUrl})\n"
-          }
-        }.dropRight(1)
+        val description = matches.slice(0, 10).foldLeft("") { (string, card) => s"$string${card.getListEntry(true)}\n"
+          }.dropRight(1)
         builder.withDescription(description)
         channel.sendMessage(builder.build())
       }

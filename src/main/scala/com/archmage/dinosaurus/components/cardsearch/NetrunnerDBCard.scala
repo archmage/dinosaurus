@@ -82,4 +82,10 @@ case class NetrunnerDBCard(
     builder.withColor(Faction.values(faction_code).color)
     builder.build()
   }
+
+  def getListEntry(iconIfNone: Boolean = true, showPack: Boolean = true): String = {
+    s"${if(!faction_code.contains("neutral")) s"${Faction.values(faction_code).emoji} "
+      else if(iconIfNone) s"${Constants.spEmoji} " else ""}" +
+      s"[$title${if(showPack) s" (${Pack.values.getOrElse(pack_code, "Unknown Pack")})" else ""}]($getUrl)"
+  }
 }
