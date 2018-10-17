@@ -55,19 +55,16 @@ case class NetrunnerDBCard(
 
   def buildEmbed(dinoBuff: Boolean = false): EmbedObject = {
     val builder = new EmbedBuilder
-    builder.withTitle(s"${if(!faction_code.contains("neutral")) s"${Faction.values(faction_code).emoji} " else ""}" +
-      s"${if(uniqueness) "◆ " else ""}" +
-      s"$title")
-    builder.withUrl(getUrl)
 
-    val subtitle = s"${if(cost.isDefined) s"${cost.get}[credit] " else ""}" +
+    val description = s"${if(!faction_code.contains("neutral")) s"${Faction.values(faction_code).emoji} " else ""}" +
+      s"[${if(uniqueness) "◆ " else ""}**$title**]($getUrl)\n" +
+      s"${if(cost.isDefined) s"${cost.get}[credit] " else ""}" +
       s"${if(memory_cost.isDefined) s"${memory_cost.get}[mu] " else ""}" +
       s"${if(agenda_points.isDefined) s"${advancement_cost.get}/${agenda_points.get} ${Constants.agendaEmoji} " else ""}" +
       s"${if(base_link.isDefined) s"${Constants.linkEmoji}${base_link.get} " else ""}" +
       s"${if(minimum_deck_size.isDefined) s"${minimum_deck_size.get}/${influence_limit.get} " else ""}" +
-      s"${type_code.capitalize}${if(keywords.isDefined) s": ${keywords.get}" else ""}"
-
-    val description = s"$subtitle\n\n${text.getOrElse("No card text.")}" +
+      s"${type_code.capitalize}${if(keywords.isDefined) s": ${keywords.get}" else ""}\n\n" +
+      s"${text.getOrElse("No card text.")}" +
       s"${if(flavor.isDefined) s"\n\n_${flavor.get}_" else ""}" +
       s"${if(strength.isDefined || trash_cost.isDefined) "\n" else ""}" +
       s"${if(strength.isDefined) s"\n**Strength ${
