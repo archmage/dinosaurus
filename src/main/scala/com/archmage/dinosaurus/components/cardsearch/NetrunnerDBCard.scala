@@ -57,7 +57,7 @@ case class NetrunnerDBCard(
     val builder = new EmbedBuilder
 
     val description = s"${if(!faction_code.contains("neutral")) s"${Faction.values(faction_code).emoji} " else ""}" +
-      s"[${if(uniqueness) "◆ " else ""}**$title**]($getUrl)\n" +
+      s"[${if(uniqueness) "◆ " else ""}$title]($getUrl)\n" +
       s"${if(cost.isDefined) s"${cost.get}[credit] " else ""}" +
       s"${if(memory_cost.isDefined) s"${memory_cost.get}[mu] " else ""}" +
       s"${if(agenda_points.isDefined) s"${advancement_cost.get}/${agenda_points.get} ${Constants.agendaEmoji} " else ""}" +
