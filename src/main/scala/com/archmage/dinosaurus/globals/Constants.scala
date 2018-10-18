@@ -1,6 +1,8 @@
 package com.archmage.dinosaurus.globals
 
-import java.time.{Duration, LocalTime}
+import java.time.LocalTime
+
+import scala.util.Random
 
 // big ol' list of wordstuff... and some non-wordstuff
 object Constants {
@@ -90,7 +92,8 @@ object Constants {
 
   // meetup api config stuff
   val meetupApi = "https://api.meetup.com"
-  val meetupEventsEndpoint = "/Melbourne-Casual-Netrunner-Meetup/events"
+  val meetupGroup = "Melbourne-Casual-Netrunner-Meetup"
+  val meetupEventsEndpoint = "events"
 
   // netrunnerdb config stuff
   val netrunnerDBApi = "https://netrunnerdb.com/api/2.0"
@@ -131,7 +134,6 @@ object Constants {
 
   // date things for autochecking
   val autocheckTime: LocalTime = LocalTime.of(9, 0)
-  val autocheckInterval: Duration = Duration.ofMinutes(2)
   val autocheckChannel = 496514701061259274L // 493948188642770945L is #dev, 496514701061259274L is #events
 
   // regex for matching commands and stuff
@@ -142,6 +144,9 @@ object Constants {
   val cardSearchRegex = """.*?[\[\(]{2}(.+?)[\]\)]{2}.*"""
   val tagRegex = "<%1$s>(.*?)</%1$s>"
   val packParseRegex = "{\"code\":\"(.*?)\".*?\"name\":\"(.*?)\".*?},"
+
+  // instance of Random
+  val random: Random = Random
 
   // error code on crash when initialising client
   val noTokenFoundInFileErrorCode = 404

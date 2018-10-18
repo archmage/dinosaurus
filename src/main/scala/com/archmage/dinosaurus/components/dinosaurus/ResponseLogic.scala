@@ -10,6 +10,7 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageEvent
 import sx.blah.discord.handle.obj.IChannel
 import sx.blah.discord.util.EmbedBuilder
 
+import scala.util.Random
 import scala.util.matching.Regex
 
 /**
@@ -114,7 +115,18 @@ object ResponseLogic {
     */
   def dab(channel: IChannel): Unit = channel.sendMessage(Constants.dinoSpeak("ヽ( •_)ᕗ"))
 
+  /**
+    * Produces an image link to MWL 2.2.
+    */
   def mwl(channel: IChannel): Unit = {
     channel.sendMessage(Constants.dinoSpeak("MWL v2.2 (6 September 2018):` https://i.imgur.com/qEGzkpX.png").dropRight(1))
+  }
+
+  /**
+    * Spits out a random card!
+    */
+  def randomCard(channel: IChannel): Unit = {
+    val card = NetrunnerDBModel.cards(Constants.random.nextInt(NetrunnerDBModel.cards.length))
+    channel.sendMessage(card.buildEmbed())
   }
 }
