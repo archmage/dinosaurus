@@ -5,8 +5,6 @@ import com.archmage.dinosaurus.globals.Constants
 import sx.blah.discord.handle.obj.{IChannel, IUser}
 import sx.blah.discord.util.EmbedBuilder
 
-import scala.collection.mutable.ListBuffer
-
 // TODO serialisation/deserialisation
 object SnakedraftManager {
 
@@ -66,14 +64,7 @@ object SnakedraftManager {
         channel.sendMessage(Constants.draftAlreadyRegisteredResponse.format(activeDraft.get.name))
       }
       else {
-        val tempPicks = List[NetrunnerDBCard](
-//          NetrunnerDBModel.searchCard("Jemison").head,
-          NetrunnerDBModel.searchCard("Magnum Opus").head,
-          NetrunnerDBModel.searchCard("Emergent Creativity").head,
-          NetrunnerDBModel.searchCard("Apocalypse").head
-        )
-
-        activeDraft = Some(activeDraft.get.appendPlayer(SnakedraftPlayer(user, tempPicks)))
+        activeDraft = Some(activeDraft.get.appendPlayer(SnakedraftPlayer(user)))
         channel.sendMessage(Constants.draftSuccessfulRegisterResponse.format(activeDraft.get.name))
       }
     }

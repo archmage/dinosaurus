@@ -24,10 +24,11 @@ class CommandListener extends IListener[MessageReceivedEvent] {
 						case "mwl" => ResponseLogic.mwl(event.getChannel)
 						case "today" => ResponseLogic.eventsToday(event.getChannel)
 
-						case "newdraft" => SnakedraftManager.newDraft(event.getChannel, args)
-						case "register" => SnakedraftManager.register(event.getChannel, event.getAuthor)
-						case "pick" => SnakedraftManager.pick(event.getChannel, event.getAuthor, args)
-						case "picks" => SnakedraftManager.picks(event.getChannel)
+						// disable snakedraft stuff for now
+						// case "newdraft" => SnakedraftManager.newDraft(event.getChannel, args)
+						// case "register" => SnakedraftManager.register(event.getChannel, event.getAuthor)
+						// case "pick" => SnakedraftManager.pick(event.getChannel, event.getAuthor, args)
+						// case "picks" => SnakedraftManager.picks(event.getChannel)
 						case _ => event.getChannel.sendMessage(s"Command: `$name`; Args: `$args`")
 					}
 				}
