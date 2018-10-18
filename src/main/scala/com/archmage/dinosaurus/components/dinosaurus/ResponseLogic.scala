@@ -1,9 +1,9 @@
 package com.archmage.dinosaurus.components.dinosaurus
 
-import java.time.{LocalDateTime, ZoneId}
 import java.time.format.DateTimeFormatter
+import java.time.{LocalDateTime, ZoneId}
 
-import com.archmage.dinosaurus.components.cardsearch.{Faction, NetrunnerDBCard, NetrunnerDBModel, Pack}
+import com.archmage.dinosaurus.components.cardsearch.{NetrunnerDBCard, NetrunnerDBModel}
 import com.archmage.dinosaurus.components.meetup.MeetupModel
 import com.archmage.dinosaurus.globals.Constants
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageEvent
@@ -12,31 +12,43 @@ import sx.blah.discord.util.EmbedBuilder
 
 import scala.util.matching.Regex
 
+/**
+  * The "brains" of Dinosaurus, this class contains all of its response logic.
+  */
 object ResponseLogic {
   val todayEventRegex: Regex = Constants.todayEventRegex.r
   var hosting: Option[NetrunnerDBCard] = None
 
-  def eventsToday(channel: IChannel, hideEmbed: Boolean = true): Unit = {
+  def defaultMentionResponse(event: MessageEvent): Unit = event.getChannel.sendMessage(Constants.defaultMentionResponse)
+
+  /**
+    * Checks Meetup for events on the day, and responds accordingly.
+    */
+  def eventsToday(channel: IChannel, hideLinkPreview: Boolean = true): Unit = {
     val events = MeetupModel.getEventsOnDay()
     events.size match {
       case 0 => channel.sendMessage(Constants.noEventsResponse)
       case 1 => channel.sendMessage(
         s"""${Constants.oneEventResponse}
            |
-           |${MeetupModel.formatEvent(events.head, hideEmbed)}""".stripMargin)
+           |${MeetupModel.formatEvent(events.head, hideLinkPreview)}""".stripMargin)
       case _ => channel.sendMessage(Constants.manyEventsResponse.format(
-        events.size, MeetupModel.formatEvent(events.head, hideEmbed)))
+        events.size, MeetupModel.formatEvent(events.head, hideLinkPreview)))
     }
   }
 
-  def defaultMentionResponse(event: MessageEvent): Unit = event.getChannel.sendMessage(Constants.defaultMentionResponse)
-
+  /**
+    * Formatted response for Meetup checks.
+    */
   def autocheckResponse(channel: IChannel): Unit = {
     channel.sendMessage(s"**${LocalDateTime.now(ZoneId.of(Constants.timezone)).format(
       DateTimeFormatter.ofPattern("EEEE, d MMMM uuuu"))}**")
-    eventsToday(channel, false)
+    eventsToday(channel, hideLinkPreview = false)
   }
 
+  /**
+    * Searches the NetrunnerDB model for cards and responds with a nicely formatted embed.
+    */
   def cardSearchResponse(channel: IChannel, searchText: String): Unit = {
     val matches = NetrunnerDBModel.searchCard(searchText)
     if(matches.isEmpty) {
@@ -51,7 +63,7 @@ object ResponseLogic {
         builder.withTitle(s"${matches.size} matches found:")
         builder.withColor(210, 226, 101)
 
-        val description = matches.slice(0, 10).foldLeft("") { (string, card) => s"$string${card.getListEntry(true)}\n"
+        val description = matches.slice(0, 10).foldLeft("") { (string, card) => s"$string${card.getListEntry()}\n"
           }.dropRight(1)
         builder.withDescription(description)
         channel.sendMessage(builder.build())
@@ -59,6 +71,9 @@ object ResponseLogic {
     }
   }
 
+  /**
+    * Host a non-AI icebreaker on Dinosaurus!
+    */
   def host(channel: IChannel, hostString: String): Unit = {
     val matches = NetrunnerDBModel.searchCard(hostString).filter(card => {
       card.keywords.isDefined && card.keywords.get.contains("Icebreaker") && !card.keywords.get.contains("AI")
@@ -78,6 +93,9 @@ object ResponseLogic {
     }
   }
 
+  /**
+    * See what Dinosaurus is currently hosting.
+    */
   def hosting(channel: IChannel): Unit = {
     if(hosting.isDefined) {
       val muFace = hosting.get.memory_cost.get match {
@@ -91,9 +109,10 @@ object ResponseLogic {
     else channel.sendMessage(Constants.dinoSpeak("""I'm not hosting anything right now :( You can give me a program to host with ".host cardname"!"""))
   }
 
-  def dab(channel: IChannel): Unit = {
-    channel.sendMessage(Constants.dinoSpeak("ヽ( •_)ᕗ"))
-  }
+  /**
+    * ヽ( •_)ᕗ
+    */
+  def dab(channel: IChannel): Unit = channel.sendMessage(Constants.dinoSpeak("ヽ( •_)ᕗ"))
 
   def mwl(channel: IChannel): Unit = {
     channel.sendMessage(Constants.dinoSpeak("MWL v2.2 (6 September 2018):` https://i.imgur.com/qEGzkpX.png").dropRight(1))

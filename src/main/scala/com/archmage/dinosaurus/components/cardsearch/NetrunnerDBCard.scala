@@ -1,10 +1,8 @@
 package com.archmage.dinosaurus.components.cardsearch
 
-import java.awt.Color
-
 import com.archmage.dinosaurus.globals.Constants
+import org.json4s.jackson.JsonMethods.parse
 import org.json4s.{DefaultFormats, _}
-import org.json4s.jackson.JsonMethods.{parse, _}
 import sx.blah.discord.api.internal.json.objects.EmbedObject
 import sx.blah.discord.util.EmbedBuilder
 

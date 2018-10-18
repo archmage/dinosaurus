@@ -10,30 +10,36 @@ import sx.blah.discord.handle.obj.IChannel
 
 import scala.util.matching.Regex
 
-// fires when the bot connects
+/**
+  * Fires when the bot connects. Used to schedule a daily Meetup autocheck.
+  */
 class GuildCreateListener extends IListener[GuildCreateEvent] {
 
   val todayEventRegex: Regex = Constants.todayEventRegex.r
-  var testThread: Thread = _
+  var autocheckThread: Thread = _
 
   override def handle(event: GuildCreateEvent): Unit = {
-    // somehow delay this until we're ready
-    testThread = new Thread(() => {
+    autocheckThread = new Thread(() => {
       // this is real heckin' sketchy, but if it works it works, right?
+      // TODO replace this with actual logic
       Thread.sleep(5000)
 
       val targetChannel = event.getGuild.getChannelByID(Constants.autocheckChannel)
-
-      // no greeting on prod
-//      targetChannel.sendMessage(Constants.greeting)
 
       // scheduling stuff, not sure where it'll live yet
       val targetDateTime = LocalDateTime.of(LocalDate.now(ZoneId.of(Constants.timezone)), Constants.autocheckTime)
       scheduleAutocheck(targetDateTime, targetChannel)
     })
-    testThread.start()
+    autocheckThread.start()
   }
 
+  /**
+    * Tail recusrive function that schedules a check, waits until the target time, does its check, then calls itself.
+    *
+    * @param date
+    * @param channel
+    */
+  // TODO move this to a separate class, it's abstract and doesn't belong here
   def scheduleAutocheck(date: LocalDateTime, channel: IChannel): Unit = {
     val delayUntilNextCheck = Duration.between(LocalDateTime.now(ZoneId.of(Constants.timezone)), date)
     if(delayUntilNextCheck.toMillis >= 0) {

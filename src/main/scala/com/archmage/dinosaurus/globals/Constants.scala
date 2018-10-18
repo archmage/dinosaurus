@@ -54,7 +54,6 @@ object Constants {
   // bot's responses
   def dinoSpeak(message: String): String = s"$dinoEmoji `$message`"
 
-  val greeting: String = dinoSpeak("Rawr! Dinosaurus here, ready to host!")
   val defaultMentionResponse: String = dinoSpeak("Hello there! Have you got a program for me?")
 
   val exceptionResponse: String = dinoSpeak("""Oh no! Whatever you just did threw this:` %1$s

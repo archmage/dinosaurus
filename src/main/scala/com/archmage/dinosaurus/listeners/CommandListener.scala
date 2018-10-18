@@ -8,13 +8,18 @@ import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedE
 
 import scala.util.matching.Regex
 
+/**
+	* Fires when the command regex gets a match (.cmd args).
+	*/
 class CommandListener extends IListener[MessageReceivedEvent] {
 	val command: Regex = Constants.commandRegex.r
 
 	override def handle(event: MessageReceivedEvent): Unit = {
 		ExceptionWrapper.wrap(event, () => {
 			event.getMessage.getContent match {
+
 				// TODO consider moving this to ResponseLogic
+				// TODO consider using Commander
 				case command(name, args) => {
 					name match {
 						case "card" | "search" => ResponseLogic.cardSearchResponse(event.getChannel, args)

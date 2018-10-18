@@ -43,7 +43,7 @@ object SnakedraftManager {
     if(activeDraft.isDefined) {
       channel.sendMessage(Constants.draftInProgressResponse)
     }
-    val romposaurus = new SnakedraftPlayer(channel.getGuild.getUserByID(496564296709308426L),
+    val romposaurus = SnakedraftPlayer(channel.getGuild.getUserByID(496564296709308426L),
       List[NetrunnerDBCard](
 //        NetrunnerDBModel.searchCard("Jemison").head,
         NetrunnerDBModel.searchCard("Magnum Opus").head,
@@ -52,7 +52,7 @@ object SnakedraftManager {
       )
     )
     val testingPlayers = List(romposaurus)
-    val newDraft = new Snakedraft(if(name.trim.isEmpty) "New Snakedraft" else name, testingPlayers)
+    val newDraft = Snakedraft(if(name.trim.isEmpty) "New Snakedraft" else name, testingPlayers)
     activeDraft = Some(newDraft)
     channel.sendMessage(Constants.draftCreatedResponse.format(activeDraft.get.name))
   }

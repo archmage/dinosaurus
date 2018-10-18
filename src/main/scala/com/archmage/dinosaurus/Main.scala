@@ -6,7 +6,12 @@ import sx.blah.discord.api.{ClientBuilder, IDiscordClient}
 
 import scala.io.Source
 
+/**
+	* The application's entry point.
+	* Starts a Discord client and attaches listeners.
+	*/
 object Main extends App {
+
 	def createClient(token: String, login: Boolean = true): IDiscordClient = {
 		val clientBuilder = new ClientBuilder
 		clientBuilder.withToken(token)
@@ -17,7 +22,6 @@ object Main extends App {
 		catch {
 			case e: Exception =>
 				e.printStackTrace()
-				println(s"Token was ${token.length} character${if(token.length == 1) "" else "s"} long.")
 				System.exit(Constants.initialisationErrorCode)
 				null
 		}
@@ -25,9 +29,7 @@ object Main extends App {
 
 	// token stuff
 	var client: IDiscordClient = _
-	if(!args.isEmpty) {
-		client = createClient(args.head)
-	}
+	if(!args.isEmpty) client = createClient(args.head)
 	else {
 		val stream = Source.fromFile(Constants.tokenFilename)
 		val token = stream.getLines().collectFirst { case x => x }
@@ -39,8 +41,8 @@ object Main extends App {
 		else client = createClient(token.get)
 	}
 
+	// attach listeners
   val dispatcher = client.getDispatcher
-
 	dispatcher.registerListener(new GuildCreateListener())
 	dispatcher.registerListener(new MentionListener())
 	dispatcher.registerListener(new CommandListener())
