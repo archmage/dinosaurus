@@ -29,6 +29,7 @@ class CommandListener extends IListener[MessageReceivedEvent] {
 						case "mwl" => ResponseLogic.mwl(event.getChannel)
 						case "randomcard" => ResponseLogic.randomCard(event.getChannel)
 						case "today" => ResponseLogic.eventsToday(event.getChannel)
+						case "unhost" => ResponseLogic.unhost(event.getChannel)
 
 						// disable snakedraft stuff for now
 						// case "newdraft" => SnakedraftManager.newDraft(event.getChannel, args)

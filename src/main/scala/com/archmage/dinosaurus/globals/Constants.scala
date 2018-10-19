@@ -2,13 +2,18 @@ package com.archmage.dinosaurus.globals
 
 import java.time.LocalTime
 
+import sx.blah.discord.api.IDiscordClient
+
 import scala.util.Random
 
-// big ol' list of wordstuff... and some non-wordstuff
+/**
+  * Constants to be used throughout the project.
+  */
 object Constants {
 
   // discord client setup stuff
   val tokenFilename = "token.txt"
+  var discordClient: Option[IDiscordClient] = None
 
   // emoji
   val dinoEmoji = "<:dino:493687330423570442>"
@@ -57,10 +62,10 @@ object Constants {
   def dinoSpeak(message: String): String = s"$dinoEmoji `$message`"
 
   val defaultMentionResponse: String = dinoSpeak("Hello there! Have you got a program for me?")
-
   val exceptionResponse: String = dinoSpeak("""Oh no! Whatever you just did threw this:` %1$s
                                               |`I've sent the details to your console. Not me, of course!""".stripMargin)
 
+  // event responses
   val noEventsResponse: String = dinoSpeak("There are no events today :(")
   val oneEventResponse: String = dinoSpeak("There is one event today!")
   val manyEventsResponse: String = dinoSpeak(
@@ -68,20 +73,32 @@ object Constants {
       |
       |%2$s""".stripMargin)
 
+  // card search
   val cardSearchNoMatchResponse: String = dinoSpeak("No Netrunner card result found for \"%1$s\".")
 
+  // hosting
+  val hostingInvalidCardResponse: String = dinoSpeak("I can't host that, that's not a non-AI icebreaker!")
+  val hostingTooManyResultsResponse: String = dinoSpeak("I found %1$s non-AI icebreakers matching that text!" +
+    "Please be more specific :(")
+  val hostingNotCurrentlyHostingResponse: String = dinoSpeak(
+    """I'm not hosting anything right now :(
+      |You can give me a program to host with ".host cardname"!""".stripMargin)
+  val hostingStopHostingResponse: String = dinoSpeak("Yaaah! Get outta here, %1$s!")
+
+  val hostingPresenceEmpty: String = "[not hosting anything]"
+  val hostingPresenceProgram: String = "[hosting %1$s]"
+
+  // draft stuff
   val draftCreatedResponse: String = dinoSpeak(
     """A new snakedraft, "%1$s", has been created!
        |Sign up with ".register".""".stripMargin)
   val draftInProgressResponse: String = dinoSpeak(
     """There is already a draft in progress (%1$s).
       |Please wait until it is done before making a new draft.""".stripMargin)
-
   val draftSuccessfulRegisterResponse: String = dinoSpeak("You are now registered for \"%1$s\"!")
   val draftAlreadyRegisteredResponse: String = dinoSpeak("You're already registered for \"%1$s\"!")
   val draftNoDraftExistsResponse: String = dinoSpeak("No draft exists.")
   val draftUserNotInDraftResponse: String = dinoSpeak("You're not in this draft.")
-
   val draftPickTooManyResponse: String = dinoSpeak("""Too many results found (%1$s) for "%2$s".""")
   val draftPickNotFoundResponse: String = dinoSpeak("""No card found for "%1$s".""")
   val draftIllegalPickResponse: String = dinoSpeak(""""%1$s" isn't a legal pick - either it's rotated or it's a core econ card.""")
@@ -90,12 +107,12 @@ object Constants {
     """%1$s has picked %2$s
       |Next up is %3$s!""".stripMargin
 
-  // meetup api config stuff
+  // meetup api config
   val meetupApi = "https://api.meetup.com"
   val meetupGroup = "Melbourne-Casual-Netrunner-Meetup"
   val meetupEventsEndpoint = "events"
 
-  // netrunnerdb config stuff
+  // netrunnerdb config
   val netrunnerDBApi = "https://netrunnerdb.com/api/2.0"
   val netrunnerDBAllCardsEndpoint = "/public/cards"
 

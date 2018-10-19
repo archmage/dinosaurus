@@ -3,6 +3,7 @@ package com.archmage.dinosaurus
 import com.archmage.dinosaurus.globals.Constants
 import com.archmage.dinosaurus.listeners.{CommandListener, GuildCreateListener, MentionListener, MessageListener}
 import sx.blah.discord.api.{ClientBuilder, IDiscordClient}
+import sx.blah.discord.handle.obj.{ActivityType, StatusType}
 
 import scala.io.Source
 
@@ -15,9 +16,11 @@ object Main extends App {
 	def createClient(token: String, login: Boolean = true): IDiscordClient = {
 		val clientBuilder = new ClientBuilder
 		clientBuilder.withToken(token)
+		clientBuilder.setPresence(StatusType.ONLINE, ActivityType.PLAYING, Constants.hostingPresenceEmpty)
 		try {
-			if (login) clientBuilder.login()
-			else clientBuilder.build()
+			if (login) Constants.discordClient = Some(clientBuilder.login())
+			else Constants.discordClient = Some(clientBuilder.build())
+			Constants.discordClient.get
 		}
 		catch {
 			case e: Exception =>

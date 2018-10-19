@@ -1,5 +1,9 @@
 package com.archmage.dinosaurus.components.meetup
 
+import java.time.{LocalDate, LocalTime}
+import java.time.format.DateTimeFormatter
+
+import com.archmage.dinosaurus.globals.Constants
 import org.json4s._
 import org.json4s.jackson.JsonMethods._
 
@@ -23,4 +27,17 @@ case class MeetupEvent(name: String,
                        description: String,
                        link: String,
                        yes_rsvp_count: Int,
-                       waitlist_count: Int)
+                       waitlist_count: Int) {
+
+  def formatEvent(hideEmbed: Boolean = false): String = {
+    val formattedDescription = description.replaceAll("<.*?>", "").replaceAll(Constants.urlRegex, "<$1>")
+    val convertedDate = LocalDate.parse(local_date).format(DateTimeFormatter.ofPattern("EEEE, d MMMM uuuu"))
+    val convertedTime = LocalTime.parse(local_time).format(DateTimeFormatter.ofPattern("h:mma"))
+    s"""**$name**
+      |$convertedDate, $convertedTime
+      |Attendees: $yes_rsvp_count confirmed
+      |${if(hideEmbed) s"<$link>" else s"$link"}
+      |
+      |$formattedDescription""".stripMargin
+  }
+}

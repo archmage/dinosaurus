@@ -7,10 +7,9 @@ import com.archmage.dinosaurus.components.cardsearch.{NetrunnerDBCard, Netrunner
 import com.archmage.dinosaurus.components.meetup.MeetupModel
 import com.archmage.dinosaurus.globals.Constants
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageEvent
-import sx.blah.discord.handle.obj.IChannel
+import sx.blah.discord.handle.obj.{ActivityType, IChannel, StatusType}
 import sx.blah.discord.util.EmbedBuilder
 
-import scala.util.Random
 import scala.util.matching.Regex
 
 /**
@@ -32,9 +31,9 @@ object ResponseLogic {
       case 1 => channel.sendMessage(
         s"""${Constants.oneEventResponse}
            |
-           |${MeetupModel.formatEvent(events.head, hideLinkPreview)}""".stripMargin)
+           |${events.head.formatEvent(hideLinkPreview)}""".stripMargin)
       case _ => channel.sendMessage(Constants.manyEventsResponse.format(
-        events.size, MeetupModel.formatEvent(events.head, hideLinkPreview)))
+        events.size, events.head.formatEvent(hideLinkPreview)))
     }
   }
 
@@ -79,18 +78,34 @@ object ResponseLogic {
     val matches = NetrunnerDBModel.searchCard(hostString).filter(card => {
       card.keywords.isDefined && card.keywords.get.contains("Icebreaker") && !card.keywords.get.contains("AI")
     })
-    if(matches.isEmpty) channel.sendMessage(Constants.dinoSpeak("I can't host that, that's not a non-AI icebreaker!"))
+    if(matches.isEmpty) channel.sendMessage(Constants.hostingInvalidCardResponse)
     else {
       if(matches.size == 1) {
         val oldHosting = hosting
         hosting = matches.headOption
+        Constants.discordClient.get.changePresence(
+          StatusType.ONLINE, ActivityType.PLAYING, Constants.hostingPresenceProgram.format(hosting.get.title))
         channel.sendMessage(Constants.dinoSpeak(s"Now hosting ${hosting.get.title}!" +
           s"${if(oldHosting.isDefined) s" Goodbye, ${oldHosting.get.title}!" else ""}"))
         channel.sendMessage(hosting.get.buildEmbed(true))
       }
       else {
-        channel.sendMessage(Constants.dinoSpeak(s"I found ${matches.size} non-AI icebreakers matching that text! Please be more specific :("))
+        channel.sendMessage(Constants.hostingTooManyResultsResponse.format(matches.size))
       }
+    }
+  }
+
+  /**
+    * Stop hosting.
+    */
+  def unhost(channel: IChannel): Unit = {
+    if(hosting.isEmpty) channel.sendMessage(Constants.hostingNotCurrentlyHostingResponse)
+    else {
+      val oldHosting = hosting.get
+      hosting = None
+      Constants.discordClient.get.changePresence(
+        StatusType.ONLINE, ActivityType.PLAYING, Constants.hostingPresenceEmpty)
+      channel.sendMessage(Constants.hostingStopHostingResponse.format(oldHosting.title))
     }
   }
 
@@ -107,11 +122,11 @@ object ResponseLogic {
       channel.sendMessage(Constants.dinoSpeak(s"I am hosting ${hosting.get.title}! I'm saving you ${hosting.get.memory_cost.get} MU $muFace"))
       channel.sendMessage(hosting.get.buildEmbed(true))
     }
-    else channel.sendMessage(Constants.dinoSpeak("""I'm not hosting anything right now :( You can give me a program to host with ".host cardname"!"""))
+    else channel.sendMessage(Constants.hostingNotCurrentlyHostingResponse)
   }
 
   /**
-    * ヽ( •_)ᕗ
+    * Dab away the haters.
     */
   def dab(channel: IChannel): Unit = channel.sendMessage(Constants.dinoSpeak("ヽ( •_)ᕗ"))
 
@@ -126,7 +141,6 @@ object ResponseLogic {
     * Spits out a random card!
     */
   def randomCard(channel: IChannel): Unit = {
-    val card = NetrunnerDBModel.cards(Constants.random.nextInt(NetrunnerDBModel.cards.length))
-    channel.sendMessage(card.buildEmbed())
+    channel.sendMessage(NetrunnerDBModel.cards(Constants.random.nextInt(NetrunnerDBModel.cards.length)).buildEmbed())
   }
 }
