@@ -1,6 +1,6 @@
-package com.archmage.dinosaurus.components.snakedraft
+package com.archmage.dinosaurus.modules.snakedraft
 
-import com.archmage.dinosaurus.components.cardsearch.{NetrunnerDBCard, NetrunnerDBModel}
+import com.archmage.dinosaurus.modules.netrunnerdb.{NetrunnerDBCard, NetrunnerDBModel}
 import com.archmage.dinosaurus.globals.Constants
 import sx.blah.discord.handle.obj.{IChannel, IUser}
 import sx.blah.discord.util.EmbedBuilder

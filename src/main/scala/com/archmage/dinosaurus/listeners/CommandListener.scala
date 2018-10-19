@@ -1,7 +1,7 @@
 package com.archmage.dinosaurus.listeners
 
-import com.archmage.dinosaurus.components.dinosaurus.ResponseLogic
-import com.archmage.dinosaurus.components.snakedraft.SnakedraftManager
+import com.archmage.dinosaurus.modules.dinosaurus.ResponseLogic
+import com.archmage.dinosaurus.modules.snakedraft.SnakedraftManager
 import com.archmage.dinosaurus.globals.{Constants, ExceptionWrapper}
 import sx.blah.discord.api.events.IListener
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageReceivedEvent
@@ -24,6 +24,7 @@ class CommandListener extends IListener[MessageReceivedEvent] {
 					name match {
 						case "card" | "search" => ResponseLogic.cardSearchResponse(event.getChannel, args)
 						case "dab" => ResponseLogic.dab(event.getChannel)
+						case "deck" => ResponseLogic.deckLookup(event.getChannel, args)
 						case "host" => ResponseLogic.host(event.getChannel, args)
 						case "hosting" => ResponseLogic.hosting(event.getChannel)
 						case "mwl" => ResponseLogic.mwl(event.getChannel)

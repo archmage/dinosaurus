@@ -1,4 +1,4 @@
-package com.archmage.dinosaurus.components.cardsearch
+package com.archmage.dinosaurus.modules.netrunnerdb
 
 import com.archmage.dinosaurus.globals.Constants
 import org.json4s.jackson.JsonMethods.parse
@@ -78,9 +78,13 @@ case class NetrunnerDBCard(
     builder.build()
   }
 
-  def getListEntry(iconIfNone: Boolean = true, showPack: Boolean = true): String = {
-    s"${if(!faction_code.contains("neutral")) s"${Faction.values(faction_code).emoji} "
-      else if(iconIfNone) s"${Constants.spEmoji} " else ""}" +
+  def getListEntry(showFactionSymbol: Boolean = true, spIfNeutral: Boolean = true, showPack: Boolean = true): String = {
+    s"${if(showFactionSymbol) factionSymbol(spIfNeutral) else ""}" +
       s"[$title${if(showPack) s" (${Pack.values.getOrElse(pack_code, "Unknown Pack")})" else ""}]($getUrl)"
+  }
+
+  def factionSymbol(spIfNeutral: Boolean = true): String = {
+    s"${if(!faction_code.contains("neutral")) s"${Faction.values(faction_code).emoji} "
+      else if(spIfNeutral) s"${Constants.spEmoji} " else ""}"
   }
 }

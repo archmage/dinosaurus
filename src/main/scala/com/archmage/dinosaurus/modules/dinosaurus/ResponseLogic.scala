@@ -1,10 +1,10 @@
-package com.archmage.dinosaurus.components.dinosaurus
+package com.archmage.dinosaurus.modules.dinosaurus
 
 import java.time.format.DateTimeFormatter
 import java.time.{LocalDateTime, ZoneId}
 
-import com.archmage.dinosaurus.components.cardsearch.{NetrunnerDBCard, NetrunnerDBModel}
-import com.archmage.dinosaurus.components.meetup.MeetupModel
+import com.archmage.dinosaurus.modules.netrunnerdb.{NetrunnerDBCard, NetrunnerDBModel}
+import com.archmage.dinosaurus.modules.meetup.MeetupModel
 import com.archmage.dinosaurus.globals.Constants
 import sx.blah.discord.handle.impl.events.guild.channel.message.MessageEvent
 import sx.blah.discord.handle.obj.{ActivityType, IChannel, StatusType}
@@ -142,5 +142,14 @@ object ResponseLogic {
     */
   def randomCard(channel: IChannel): Unit = {
     channel.sendMessage(NetrunnerDBModel.cards(Constants.random.nextInt(NetrunnerDBModel.cards.length)).buildEmbed())
+  }
+
+  /**
+    * Lookup a deck using NetrunnerDBModel, given an ID, and produce a nice embed.
+    */
+  def deckLookup(channel: IChannel, deckId: String): Unit = {
+    val deck = NetrunnerDBModel.getDeck(deckId)
+    if(deck.isEmpty) channel.sendMessage(Constants.deckSearchDeckNotFound.format(deckId))
+    else channel.sendMessage(deck.get.buildEmbed)
   }
 }

@@ -1,6 +1,6 @@
 package com.archmage.dinosaurus.listeners
 
-import com.archmage.dinosaurus.components.dinosaurus.{DinosaurusBrokeSomethingException, ResponseLogic}
+import com.archmage.dinosaurus.modules.dinosaurus.{DinosaurusBrokeSomethingException, ResponseLogic}
 import com.archmage.dinosaurus.globals.{ExceptionWrapper, Constants}
 import sx.blah.discord.api.events.IListener
 import sx.blah.discord.handle.impl.events.guild.channel.message.MentionEvent

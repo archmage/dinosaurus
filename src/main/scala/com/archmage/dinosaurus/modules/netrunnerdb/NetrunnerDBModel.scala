@@ -1,10 +1,14 @@
-package com.archmage.dinosaurus.components.cardsearch
+package com.archmage.dinosaurus.modules.netrunnerdb
 
 import com.archmage.dinosaurus.globals.Constants
+import scalaj.http.HttpStatusException
 
 import scala.io.Source
 
 object NetrunnerDBModel {
+  val api: String = Constants.netrunnerDBApi
+  val deckEndpoint: String = Constants.netrunnerDBPublicDeckEndpoint
+
   val cards: List[NetrunnerDBCard] = {
     val stream = Source.fromFile(Constants.cardCache)
     val string = stream.mkString
@@ -29,5 +33,19 @@ object NetrunnerDBModel {
     }
 
     else matches
+  }
+
+  def lookupId(id: String): Option[NetrunnerDBCard] = cards.collectFirst { case card if card.code == id => card }
+
+  def getDeck(id: String): Option[NetrunnerDBDeck] = {
+    val url = s"$api/$deckEndpoint$id"
+    try {
+      val apiRequest = Constants.request(url)
+      if (!apiRequest.contentType.get.contains("json")) None
+      else Some(NetrunnerDBDeck.make(apiRequest.body))
+    }
+    catch {
+      case _: HttpStatusException => None
+    }
   }
 }

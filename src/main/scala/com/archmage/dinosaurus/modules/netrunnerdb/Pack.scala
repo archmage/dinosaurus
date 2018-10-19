@@ -1,4 +1,4 @@
-package com.archmage.dinosaurus.components.cardsearch
+package com.archmage.dinosaurus.modules.netrunnerdb
 
 // hard-coded for now, maybe revisit this when a new set comes out
 // endpoint: /api/2.0/public/packs

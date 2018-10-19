@@ -2,6 +2,8 @@ package com.archmage.dinosaurus.globals
 
 import java.time.LocalTime
 
+import com.archmage.dinosaurus.modules.meetup.MeetupModel.useragent
+import scalaj.http.{Http, HttpResponse}
 import sx.blah.discord.api.IDiscordClient
 
 import scala.util.Random
@@ -88,6 +90,9 @@ object Constants {
   val hostingPresenceEmpty: String = "[not hosting anything]"
   val hostingPresenceProgram: String = "[hosting %1$s]"
 
+  // deck lookup
+  val deckSearchDeckNotFound: String = dinoSpeak("Deck not found for ID \"%1$s\".")
+
   // draft stuff
   val draftCreatedResponse: String = dinoSpeak(
     """A new snakedraft, "%1$s", has been created!
@@ -114,7 +119,8 @@ object Constants {
 
   // netrunnerdb config
   val netrunnerDBApi = "https://netrunnerdb.com/api/2.0"
-  val netrunnerDBAllCardsEndpoint = "/public/cards"
+  val netrunnerDBAllCardsEndpoint = "public/cards"
+  val netrunnerDBPublicDeckEndpoint = "public/deck/"
 
   val cardCache = "cards.json"
 
@@ -168,6 +174,17 @@ object Constants {
   // error code on crash when initialising client
   val noTokenFoundInFileErrorCode = 404
   val initialisationErrorCode = 14
+
+  // core request function that simplifies header assignment and response formatting
+  def request(string: String): HttpResponse[String] = {
+    val request = Http(string)
+    request.header("User-Agent", useragent)
+    val response = request.asString
+    println(request)
+    println(s"response: ${response.code}")
+    if(response.isError) response.throwError
+    response
+  }
 
   implicit class StringFunctions(s: String) {
     def replaceTag(tag: String, replacement: String): String = {

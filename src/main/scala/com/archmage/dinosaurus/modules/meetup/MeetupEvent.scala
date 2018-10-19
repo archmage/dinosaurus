@@ -1,4 +1,4 @@
-package com.archmage.dinosaurus.components.meetup
+package com.archmage.dinosaurus.modules.meetup
 
 import java.time.{LocalDate, LocalTime}
 import java.time.format.DateTimeFormatter

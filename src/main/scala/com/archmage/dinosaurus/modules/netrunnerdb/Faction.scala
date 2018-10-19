@@ -1,4 +1,4 @@
-package com.archmage.dinosaurus.components.cardsearch
+package com.archmage.dinosaurus.modules.netrunnerdb
 
 import java.awt.Color
 
