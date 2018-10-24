@@ -17,29 +17,7 @@ class CommandListener extends IListener[MessageReceivedEvent] {
 	override def handle(event: MessageReceivedEvent): Unit = {
 		ExceptionWrapper.wrap(event, () => {
 			event.getMessage.getContent match {
-
-				// TODO consider moving this to ResponseLogic
-				// TODO consider using Commander
-				case command(name, args) => {
-					name match {
-						case "card" | "search" => ResponseLogic.cardSearchResponse(event.getChannel, args)
-						case "dab" => ResponseLogic.dab(event.getChannel)
-						case "deck" => ResponseLogic.deckLookup(event.getChannel, args)
-						case "host" => ResponseLogic.host(event.getChannel, args)
-						case "hosting" => ResponseLogic.hosting(event.getChannel)
-						case "mwl" => ResponseLogic.mwl(event.getChannel)
-						case "randomcard" => ResponseLogic.randomCard(event.getChannel)
-						case "today" => ResponseLogic.eventsToday(event.getChannel)
-						case "unhost" => ResponseLogic.unhost(event.getChannel)
-
-						// disable snakedraft stuff for now
-						// case "newdraft" => SnakedraftManager.newDraft(event.getChannel, args)
-						// case "register" => SnakedraftManager.register(event.getChannel, event.getAuthor)
-						// case "pick" => SnakedraftManager.pick(event.getChannel, event.getAuthor, args)
-						// case "picks" => SnakedraftManager.picks(event.getChannel)
-						case _ => event.getChannel.sendMessage(s"Command: `$name`; Args: `$args`")
-					}
-				}
+				case command(name, args) => ResponseLogic.processCommand(event.getChannel, name, args)
 				case _ => ()
 			}
 		})

@@ -67,6 +67,9 @@ object Constants {
   val exceptionResponse: String = dinoSpeak("""Oh no! Whatever you just did threw this:` %1$s
                                               |`I've sent the details to your console. Not me, of course!""".stripMargin)
 
+  val commandNotFoundResponse: String = dinoSpeak("""Unknown command:` %1$s
+      |`Type ".help" for a list of commands.""".stripMargin)
+
   // event responses
   val noEventsResponse: String = dinoSpeak("There are no events today :(")
   val oneEventResponse: String = dinoSpeak("There is one event today!")
@@ -121,6 +124,7 @@ object Constants {
   val netrunnerDBApi = "https://netrunnerdb.com/api/2.0"
   val netrunnerDBAllCardsEndpoint = "public/cards"
   val netrunnerDBPublicDeckEndpoint = "public/deck/"
+  val netrunnerDBPublishedDeckEndpoint = "public/decklist/"
 
   val cardCache = "cards.json"
 

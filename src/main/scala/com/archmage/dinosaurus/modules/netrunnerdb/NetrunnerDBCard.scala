@@ -20,6 +20,11 @@ object NetrunnerDBCard {
     val posts = parse(json).children(1).extract[List[NetrunnerDBCard]]
     posts
   }
+
+  def makeManual(title: String, factionCode: String, code: String): NetrunnerDBCard = {
+    NetrunnerDBCard(None, None, Some(1), code, None, 1, factionCode, None, None, None, None, None, None, None,
+      None, "", 0, 3, "runner", None, None, title, None, "", uniqueness = false)
+  }
 }
 
 case class NetrunnerDBCard(

@@ -19,7 +19,7 @@ class MessageListener extends IListener[MessageReceivedEvent] {
     ExceptionWrapper.wrap(event, () => {
       event.getMessage.getContent.toLowerCase match {
         case todayEventRegex(_, _, _) => ResponseLogic.eventsToday(event.getChannel)
-        case cardSearchRegex(searchText) => ResponseLogic.cardSearchResponse(event.getChannel, searchText)
+        case cardSearchRegex(searchText) => ResponseLogic.cardSearch(event.getChannel, searchText)
         case _ => ()
       }
     })

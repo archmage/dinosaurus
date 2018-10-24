@@ -18,7 +18,7 @@ class MentionListener extends IListener[MentionEvent] {
 		ExceptionWrapper.wrap(event, () => {
 			event.getMessage.getContent.toLowerCase match {
 				case throwExceptionRegex(_, _, _) => throw new DinosaurusBrokeSomethingException
-				case _ => ResponseLogic.defaultMentionResponse(event)
+				case _ => ResponseLogic.defaultMentionResponse(event.getChannel)
 			}
 		})
 	}
