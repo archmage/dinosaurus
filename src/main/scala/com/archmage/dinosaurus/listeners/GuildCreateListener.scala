@@ -16,18 +16,16 @@ import scala.util.matching.Regex
 class GuildCreateListener extends IListener[GuildCreateEvent] {
 
   val todayEventRegex: Regex = Constants.todayEventRegex.r
-  var autocheckThread: Option[Thread] = _
+  var autocheckThread: Option[Thread] = None
 
   override def handle(event: GuildCreateEvent): Unit = {
     // only start a new thread if one doesn't exist!!
     // this fixes a fascinating bug with disconnects/reconnects spawning a second thread
     if(autocheckThread.isEmpty) {
+      while(!event.getGuild.getShard.isReady) {
+        Thread.sleep(1000)
+      }
       autocheckThread = Some(new Thread(() => {
-        // this is real heckin' sketchy, but if it works it works, right?
-        while(!event.getGuild.getShard.isReady) {
-          Thread.sleep(1000)
-        }
-
         val targetChannel = event.getGuild.getChannelByID(Constants.autocheckChannel)
 
         // scheduling stuff, not sure where it'll live yet
