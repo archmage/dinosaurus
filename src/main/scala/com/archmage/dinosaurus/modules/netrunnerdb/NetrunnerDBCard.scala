@@ -66,7 +66,7 @@ case class NetrunnerDBCard(
       s"${if(flavor.isDefined) s"\n\n_${flavor.get}_" else ""}" +
       s"${if(strength.isDefined || trash_cost.isDefined) "\n" else ""}" +
       s"${if(strength.isDefined) s"\n**Strength ${
-        if(dinoBuff) s"${strength.get + 2} (base ${strength.get}, +2 from Dinosaurus)" else strength.get}**" else ""}" +
+        if(dinoBuff) s"${strength.get + 2}** (base ${strength.get}, +2 from Dinosaurus)" else strength.get + "**"}" else ""}" +
       s"${if(trash_cost.isDefined) s"\n${trash_cost.get}[trash]" else ""}"
 
     builder.withDescription(Constants.formatDescriptionText(description))

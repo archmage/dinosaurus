@@ -24,8 +24,9 @@ class GuildCreateListener extends IListener[GuildCreateEvent] {
     if(autocheckThread.isEmpty) {
       autocheckThread = Some(new Thread(() => {
         // this is real heckin' sketchy, but if it works it works, right?
-        // TODO replace this with actual logic
-        Thread.sleep(5000)
+        while(!event.getGuild.getShard.isReady) {
+          Thread.sleep(1000)
+        }
 
         val targetChannel = event.getGuild.getChannelByID(Constants.autocheckChannel)
 
