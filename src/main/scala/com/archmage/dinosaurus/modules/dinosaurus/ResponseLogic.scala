@@ -6,10 +6,10 @@ import java.time.{LocalDateTime, ZoneId}
 import com.archmage.dinosaurus.Command
 import com.archmage.dinosaurus.globals.Constants
 import com.archmage.dinosaurus.modules.meetup.MeetupModel
+import com.archmage.dinosaurus.modules.netrunnerdb.NetrunnerDBModel.CardListFunctions
 import com.archmage.dinosaurus.modules.netrunnerdb.{NetrunnerDBCard, NetrunnerDBModel}
 import sx.blah.discord.handle.obj.{ActivityType, IChannel, StatusType}
 import sx.blah.discord.util.EmbedBuilder
-import com.archmage.dinosaurus.modules.netrunnerdb.NetrunnerDBModel.CardListFunctions
 
 import scala.util.matching.Regex
 

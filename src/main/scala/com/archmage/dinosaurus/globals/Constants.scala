@@ -2,7 +2,6 @@ package com.archmage.dinosaurus.globals
 
 import java.time.LocalTime
 
-import com.archmage.dinosaurus.modules.meetup.MeetupModel.useragent
 import scalaj.http.{Http, HttpResponse}
 import sx.blah.discord.api.IDiscordClient
 

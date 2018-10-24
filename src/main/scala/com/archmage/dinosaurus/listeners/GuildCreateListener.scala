@@ -2,8 +2,8 @@ package com.archmage.dinosaurus.listeners
 
 import java.time.{Duration, LocalDate, LocalDateTime, ZoneId}
 
-import com.archmage.dinosaurus.modules.dinosaurus.ResponseLogic
 import com.archmage.dinosaurus.globals.Constants
+import com.archmage.dinosaurus.modules.dinosaurus.ResponseLogic
 import sx.blah.discord.api.events.IListener
 import sx.blah.discord.handle.impl.events.guild.GuildCreateEvent
 import sx.blah.discord.handle.obj.IChannel

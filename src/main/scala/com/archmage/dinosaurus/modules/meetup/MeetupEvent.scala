@@ -1,7 +1,7 @@
 package com.archmage.dinosaurus.modules.meetup
 
-import java.time.{LocalDate, LocalTime}
 import java.time.format.DateTimeFormatter
+import java.time.{LocalDate, LocalTime}
 
 import com.archmage.dinosaurus.globals.Constants
 import org.json4s._

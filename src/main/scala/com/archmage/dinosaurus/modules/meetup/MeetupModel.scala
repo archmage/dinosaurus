@@ -1,10 +1,9 @@
 package com.archmage.dinosaurus.modules.meetup
 
 import java.time.format.DateTimeFormatter
-import java.time.{LocalDate, LocalTime, ZoneId}
+import java.time.{LocalDate, ZoneId}
 
 import com.archmage.dinosaurus.globals.Constants
-import scalaj.http.{Http, HttpResponse}
 
 object MeetupModel {
   val api: String = Constants.meetupApi
