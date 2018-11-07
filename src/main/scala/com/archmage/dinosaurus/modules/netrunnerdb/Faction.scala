@@ -13,7 +13,7 @@ object Faction {
     "shaper" -> Faction("Shaper", new Color(106, 181, 69), Constants.shaperEmoji),
     "adam" -> Faction("Adam", new Color(178, 166, 80), Constants.adamEmoji),
     "apex" -> Faction("Apex", new Color(201, 49, 47), Constants.apexEmoji),
-    "sunny" -> Faction("Sunny", new Color(110, 112, 111), Constants.sunnyEmoji),
+    "sunny-lebeau" -> Faction("Sunny", new Color(110, 112, 111), Constants.sunnyEmoji),
     "neutral-runner" -> Faction("Neutral", Color.lightGray),
 
     "haas-bioroid" -> Faction("Haas-Bioroid", new Color(107, 43, 138), Constants.hbEmoji),
