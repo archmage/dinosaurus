@@ -2,7 +2,7 @@ lazy val root = (project in file(".")).
   settings(
     inThisBuild(List(
       organization := "com.example",
-      scalaVersion := "2.12.6",
+      scalaVersion := "2.13.0",
       version      := "1.1"
     )),
     name := "dinosaurus",
@@ -10,10 +10,10 @@ lazy val root = (project in file(".")).
     mainClass in assembly := Some("com.archmage.dinosaurus.Main"),
     assemblyJarName in assembly := "Dinosaurus.jar",
     libraryDependencies ++= Seq (
-      "com.github.austinv11" % "Discord4J" % "2.10.1",
-      "org.scalaj" %% "scalaj-http" % "2.3.0",
-      "org.json4s" %% "json4s-native" % "3.6.0",
-      "org.json4s" %% "json4s-jackson" % "3.6.0"
+      "com.github.austinv11" % "Discord4J" % "3.0.9",
+      "org.scalaj" %% "scalaj-http" % "2.4.2",
+      "org.json4s" %% "json4s-native" % "3.6.7",
+      "org.json4s" %% "json4s-jackson" % "3.6.7"
     )
   )
 
