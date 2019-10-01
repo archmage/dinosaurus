@@ -2,8 +2,7 @@ package com.archmage.dinosaurus
 
 import com.archmage.dinosaurus.globals.Constants
 import com.archmage.dinosaurus.listeners.{CommandListener, GuildCreateListener, MentionListener, MessageListener}
-import sx.blah.discord.api.{ClientBuilder, IDiscordClient}
-import sx.blah.discord.handle.obj.{ActivityType, StatusType}
+import discord4j.core.{DiscordClient, DiscordClientBuilder}
 
 import scala.io.Source
 
@@ -13,8 +12,8 @@ import scala.io.Source
 	*/
 object Main extends App {
 
-	def createClient(token: String, login: Boolean = true): IDiscordClient = {
-		val clientBuilder = new ClientBuilder
+	def createClient(token: String, login: Boolean = true): DiscordClient = {
+		val clientBuilder = new DiscordClientBuilder(token).build()
 		clientBuilder.withToken(token)
 		clientBuilder.setPresence(StatusType.ONLINE, ActivityType.PLAYING, Constants.hostingPresenceEmpty)
 		try {
